@@ -1,0 +1,31 @@
+def fifo():
+    global a, n, m
+    f = -1
+    page_faults = 0
+    page = [-1] * m
+    for i in range(n):
+        flag = 0
+        for j in range(m):
+            if page[j] == a[i]:
+                flag = 1
+                break
+        if flag == 0:
+            f = (f + 1) % m
+            page[f] = a[i]
+            page_faults += 1
+            print("\n%d ->" % a[i], end=" ")
+            for j in range(m):
+                if page[j] != -1:
+                    print(page[j], end=" ")
+                else:
+                    print("-", end=" ")
+        else:
+            print("\n%d -> No Page Fault" % a[i], end=" ")
+    print("\nTotal page faults: %d." % page_faults)
+
+a = []
+n = int(input("\nEnter the size of reference string: "))
+for i in range(n):
+    a.append(int(input("Enter [%2d]: " % (i + 1))))
+m = int(input("\nEnter page frame size: "))
+fifo()
